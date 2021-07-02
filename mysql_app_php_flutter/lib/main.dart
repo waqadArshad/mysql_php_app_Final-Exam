@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mysql_app_php_flutter/services/services.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
 
 import 'model/User.dart';
 
@@ -35,43 +36,7 @@ Widget DrawerNav(BuildContext context) {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.add_box),
-          title: Text(
-            'Beginner',
-            style: TextStyle(
-                fontFamily: 'Roboto',
-                fontSize: 15,
-                fontWeight: FontWeight.bold),
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Beginner(),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.add_box),
-          title: Text(
-            'Expert',
-            style: TextStyle(
-                fontFamily: 'Roboto',
-                fontSize: 15,
-                fontWeight: FontWeight.bold),
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Expert(),
-              ),
+              MaterialPageRoute(builder: (context) => Form()),
             );
           },
         ),
@@ -119,7 +84,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     Widget splashWidget = SplashScreenView(
-      navigateRoute: Home(),
+      navigateRoute: Form(),
       duration: 5000,
       imageSize: 280,
       imageSrc: "images/tictactoelogo.png",
@@ -400,6 +365,7 @@ class _FormState extends State<Form> {
       appBar: AppBar(
         title: Text(_titleProgress),
       ),
+      drawer: DrawerNav(context),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -463,3 +429,279 @@ class _FormState extends State<Form> {
     );
   }
 }
+
+class ContactUs extends StatelessWidget {
+// This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: '2nd Week App',
+      home: Scaffold(
+        drawer: DrawerNav(context),
+        backgroundColor: Colors.grey[900],
+        appBar: AppBar(
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.home_outlined),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Form(),
+                ),
+              );
+            },
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.exit_to_app,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+          backgroundColor: Colors.blue,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Container(
+                    //whole upper container
+                    width: 360,
+                    height: 80,
+                    // padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                    color: Colors.white,
+                    child: Row(
+                      children: <Widget>[
+                        // Container(
+                        //   padding: EdgeInsets.all(8.0),
+                        //   margin: EdgeInsets.symmetric(vertical: 3.0),
+                        //   child: Column(
+                        //     children: <Widget>[
+                        //       Image(image: AssetImage('assets/ic_launcher_mdpi.png')),
+                        //     ],
+                        //   ),
+                        // ),
+
+                        Container(
+                          padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                          margin: EdgeInsets.symmetric(vertical: 6.0),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    'Tosty ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 34),
+                                  ),
+                                  Text(
+                                    'Software Solutions',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 18),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                'and Network Designs, Lahore',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    height: 40,
+                    width: 360,
+                    padding: EdgeInsets.all(8.0),
+                    color: Colors.red,
+                    child: Text(
+                      'LSD',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                // Meri Image wali Row
+                children: <Widget>[
+                  Container(
+                    //whole meri pic wala container
+                    width: 360,
+                    height: 210,
+                    padding: EdgeInsets.fromLTRB(44, 0, 0, 0),
+                    color: Colors.white,
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          // padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.symmetric(vertical: 90.0),
+                          // color: Colors.amber,
+
+                          child: Column(
+                            children: <Widget>[
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  child: Text(
+                                    'SP18',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 15),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                          // color: Colors.brown,
+                          // margin: EdgeInsets.symmetric(vertical: 8.0),
+                          margin: EdgeInsets.fromLTRB(0, 0, 19, 0),
+                          child: Column(
+                            children: <Widget>[
+                              // SizedBox(width: 55.0,
+                              // ),
+                              Image(
+                                image: AssetImage('images/tictactoelogo.png'),
+                                height: 180,
+                                width: 260,
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                //meri written info wali row
+                children: <Widget>[
+                  Container(
+                    //whole upper container
+                    width: 360,
+                    height: 130,
+                    color: Colors.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            margin: EdgeInsets.symmetric(vertical: 2.0),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Waqad',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 20),
+                                ),
+                                Text(
+                                  'Des: Lead Developer at Tosty Developers ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 16),
+                                ),
+                                Text(
+                                  'Phone No. # +92304-3211321',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 16),
+                                ),
+                                // Image(image: AssetImage('assets/5.jpg'),
+                                //   width: 250.0,
+                                //   height: 30.0,),
+                                Text(
+                                  'Email: waqadarshad2@gmail.com',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                //Department info wali row
+                children: <Widget>[
+                  Container(
+                    //whole upper container
+                    width: 360,
+                    height: 60,
+                    // padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                    color: Colors.blue,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.all(6.0),
+                            margin: EdgeInsets.symmetric(vertical: 1.0),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Department of',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontSize: 16),
+                                ),
+                                Text(
+                                  'Mobile Development',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
