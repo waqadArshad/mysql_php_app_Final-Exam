@@ -7,6 +7,143 @@ void main() {
   runApp(MaterialApp(home: Form()));
 }
 
+Widget DrawerNav(BuildContext context) {
+  var navMenu = Drawer(
+    child: ListView(
+      children: [
+        DrawerHeader(
+          child: Container(
+            alignment: Alignment.center,
+            child: Text(
+              'Tic Tac\n    Toe',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.home),
+          title: Text(
+            'Home',
+            style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 15,
+                fontWeight: FontWeight.bold),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.add_box),
+          title: Text(
+            'Beginner',
+            style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 15,
+                fontWeight: FontWeight.bold),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Beginner(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.add_box),
+          title: Text(
+            'Expert',
+            style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 15,
+                fontWeight: FontWeight.bold),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Expert(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.info),
+          title: Text(
+            'Contact Me',
+            style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 15,
+                fontWeight: FontWeight.bold),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ContactUs()),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.exit_to_app),
+          title: Text(
+            'Exit',
+            style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 15,
+                fontWeight: FontWeight.bold),
+          ),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    ),
+  );
+  return navMenu;
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  Widget build(BuildContext context) {
+    Widget splashWidget = SplashScreenView(
+      navigateRoute: Home(),
+      duration: 5000,
+      imageSize: 280,
+      imageSrc: "images/tictactoelogo.png",
+      text: "Waqad\nSP18-BCS-112",
+      textType: TextType.ColorizeAnimationText,
+      textStyle: TextStyle(
+        fontSize: 40.0,
+      ),
+      colors: [
+        Colors.green[200],
+        Colors.blue,
+        Colors.red,
+        Colors.pink[100],
+      ],
+      backgroundColor: Colors.yellow,
+    );
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Splash screen',
+      home: splashWidget,
+    );
+  }
+}
+
 // ignore: use_key_in_widget_constructors
 class Form extends StatefulWidget {
   const Form({Key key}) : super(key: key);
@@ -16,7 +153,7 @@ class Form extends StatefulWidget {
 
 class _FormState extends State<Form> {
 
-  List<User> _userList;
+  List<User> _userList=[];
   final nameCon = TextEditingController();
   final emailCon = TextEditingController();
   final phoneCon = TextEditingController();
@@ -30,7 +167,6 @@ class _FormState extends State<Form> {
   @override
   void initState(){
     super.initState();
-    _userList=[];
     _isUpdating=false;
     _titleProgress= "Flutter Data Table";
     _getUsers();
@@ -57,9 +193,11 @@ class _FormState extends State<Form> {
       print("inside _getUser");
       setState(() {
         _userList = users;
+
       });
+      print("uselist is $_userList");
       _showProgress("Flutter DataTable");
-      print("Length: ${users.length}");
+      print("Length: ${_userList.length}");
     });
   }
 
@@ -81,12 +219,12 @@ class _FormState extends State<Form> {
     });
   }
 
-  _deleteUser(User user) {
+  _deleteUser(String email) {
     _showProgress('Deleting Employee...');
-    Services.deleteUser(user.email).then((result) {
+    Services.deleteUser(email).then((result) {
       if ('success' == result) {
         setState(() {
-          _userList.remove(user);
+          // _userList.remove(user);
         });
         _getUsers();
       }
@@ -118,83 +256,83 @@ class _FormState extends State<Form> {
     });
   }
 
-  SingleChildScrollView _dataBody() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: DataTable(
-          columns: [
-            DataColumn(
-                label: Text("ID"),
-                numeric: false,
-                tooltip: "This is the User id"),
-            DataColumn(
-                label: Text(
-                  "NAME",
-                ),
-                numeric: false,
-                tooltip: "This is the name"),
-            DataColumn(
-                label: Text("EMAIL"),
-                numeric: false,
-                tooltip: "This is the email"),
-            DataColumn(
-                label: Text("DELETE"),
-                numeric: false,
-                tooltip: "Delete Action"),
-          ],
-          rows: _userList
-              .map(
-                (user) => DataRow(
-              cells: [
-                DataCell(
-                  Text(user.id),
-                  onTap: () {
-                    print("Tapped " + user.name);
-                    _setValues(user);
-                    _selectedUser = user;
-                  },
-                ),
-                DataCell(
-                  Text(
-                    user.name.toUpperCase(),
-                  ),
-                  onTap: () {
-                    print("Tapped " + user.name);
-                    _setValues(user);
-                    _selectedUser = user;
-                  },
-                ),
-                DataCell(
-                  Text(
-                    user.email.toUpperCase(),
-                  ),
-                  onTap: () {
-                    print("Tapped " + user.name);
-                    _setValues(user);
-                    _selectedUser = user;
-                  },
-                ),
-                DataCell(
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      _deleteUser(user);
-                    },
-                  ),
-                  onTap: () {
-                    print("Tapped " + user.name);
-                  },
-                ),
-              ],
-            ),
-          )
-              .toList(),
-        ),
-      ),
-    );
-  }
+  // SingleChildScrollView _dataBody() {
+  //   return SingleChildScrollView(
+  //     scrollDirection: Axis.vertical,
+  //     child: SingleChildScrollView(
+  //       scrollDirection: Axis.horizontal,
+  //       child: DataTable(
+  //         columns: [
+  //           DataColumn(
+  //               label: Text("ID"),
+  //               numeric: false,
+  //               tooltip: "This is the User id"),
+  //           DataColumn(
+  //               label: Text(
+  //                 "NAME",
+  //               ),
+  //               numeric: false,
+  //               tooltip: "This is the name"),
+  //           DataColumn(
+  //               label: Text("EMAIL"),
+  //               numeric: false,
+  //               tooltip: "This is the email"),
+  //           DataColumn(
+  //               label: Text("DELETE"),
+  //               numeric: false,
+  //               tooltip: "Delete Action"),
+  //         ],
+  //         rows: _userList
+  //             .map(
+  //               (user) => DataRow(
+  //             cells: [
+  //               DataCell(
+  //                 Text(user.id),
+  //                 onTap: () {
+  //                   print("Tapped " + user.name);
+  //                   _setValues(user);
+  //                   _selectedUser = user;
+  //                 },
+  //               ),
+  //               DataCell(
+  //                 Text(
+  //                   user.name.toUpperCase(),
+  //                 ),
+  //                 onTap: () {
+  //                   print("Tapped " + user.name);
+  //                   _setValues(user);
+  //                   _selectedUser = user;
+  //                 },
+  //               ),
+  //               DataCell(
+  //                 Text(
+  //                   user.email.toUpperCase(),
+  //                 ),
+  //                 onTap: () {
+  //                   print("Tapped " + user.name);
+  //                   _setValues(user);
+  //                   _selectedUser = user;
+  //                 },
+  //               ),
+  //               DataCell(
+  //                 IconButton(
+  //                   icon: Icon(Icons.delete),
+  //                   onPressed: () {
+  //                     _deleteUser(user);
+  //                   },
+  //                 ),
+  //                 onTap: () {
+  //                   print("Tapped " + user.name);
+  //                 },
+  //               ),
+  //             ],
+  //           ),
+  //         )
+  //             .toList(),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget textFieldBuiilder(TextEditingController cont, String label) {
     return Container(
@@ -246,6 +384,7 @@ class _FormState extends State<Form> {
             _addUser();
           } else if (name == "Delete") {
             // Delete function
+            _deleteUser(emailCon.text);
           } else if (name == "Update") {
             // Update function
             // _updateUser(user);
@@ -316,7 +455,7 @@ class _FormState extends State<Form> {
                   ),
                 ],
               ),
-              _dataBody(),
+              // _dataBody(),
             ],
           ),
         ),

@@ -22,14 +22,13 @@ class Services{
         if (response.statusCode == 200) {
           List<User> list = parseResponse(response.body);
           print("response body is ${response.body}");
-          print("returned list is $list");
+          print("returned list is ${list.length}");
           return list;
-        } else {
-          throw List<User>();
-        }
+        } 
       });
 
     } catch (e) {
+      print("inside catch.");
       return List<User>();
     }
   }
