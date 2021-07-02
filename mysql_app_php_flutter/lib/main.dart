@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mysql_app_php_flutter/services/services.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
@@ -364,6 +365,17 @@ class _FormState extends State<Form> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_titleProgress),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.exit_to_app,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              SystemNavigator.pop();
+            },
+          ),
+        ],
       ),
       drawer: DrawerNav(context),
       body: SafeArea(
